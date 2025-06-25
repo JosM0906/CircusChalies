@@ -2,6 +2,10 @@
 
 (function(){
 'use strict';
+// Este es el constructor del estado Stage01 del juego.
+// Phaser automáticamente asigna varias propiedades útiles al estado, como this.game, this.add, this.physics, etc.
+// Así que dentro de cualquier función de este estado puedes usar esas propiedades sin problema.
+
 GameCtrl.Stage01 = function () {
 
         //        When a State is added to Phaser it automatically has the following properties set on it, even if they already exist:
@@ -22,16 +26,16 @@ GameCtrl.Stage01 = function () {
     this.physics;        //        the physics manager
     this.rnd;                //        the repeatable random number generator
 */
-    //        You can use any of these from any function within this State.
-    //        But do consider them as being 'reserved words', i.e. don't create a property for your own game called "world" or you'll over-write the world reference.
+    //        Puedes utilizar cualquiera de estas funciones con este estado
+    //        Se debe eviar usar esas palabras son reservadas del framework, i.e. no usar para nombrar tu "world" o alguna referencia
 
 };
 
 GameCtrl.Stage01.prototype = {
     
-    /**
-     * Draw the distance
-     */
+    
+     // Dibuja las marcas de distancia en pantalla, mostrando números y rectángulos decorativos
+
     _createMeters:function(){
         var graphics = this.add.graphics(0, 0);
         var x;
@@ -54,37 +58,32 @@ GameCtrl.Stage01.prototype = {
 
 
     },
-    /**
-     * Create player group (the clown and the lion)
-     */
-    _createPlayer:function(){
-        this.lion=this.add.sprite(85, 630, 'clown','lion0000');
-        this.physics.enable(this.lion, Phaser.Physics.ARCADE);
-        
 
-        this.lion.body.setSize(90, 50, -5, 0);
+    // Crea al jugador, que es un grupo formado por el león y el payaso (clown)
+    _createPlayer:function(){
+        this.lion=this.add.sprite(85, 630, 'clown','lion0000'); // Sprite del león
+        this.physics.enable(this.lion, Phaser.Physics.ARCADE);// Activar física para que colisione
+        this.lion.body.setSize(90, 50, -5, 0);// Área del león para colisiones
         
-        this.clown=this.game.add.sprite(7, -22, 'clown','clownStand0000');
+        this.clown=this.game.add.sprite(7, -22, 'clown','clownStand0000'); // Payaso montado
         this.physics.enable(this.clown, Phaser.Physics.ARCADE,true);
-        this.lion.addChild(this.clown);
+        this.lion.addChild(this.clown);// Lo "pegamos" al león
         
         
         this.lion.scale.x =3;
         this.lion.scale.y =3;
         
-
+        // Animaciones del león corriendo o parado
         this.lion.animations.add('runLion', Phaser.Animation.generateFrameNames('lion', 0, 2, '', 4), 3 /*fps */, true);
         this.lion.animations.add('idleLion', Phaser.Animation.generateFrameNames('lion', 0, 0, '', 4), 1 /*fps */, true);
         
 
         this.clown.isRunning=false;
-        this.lion.body.collideWorldBounds=true;
+        this.lion.body.collideWorldBounds=true;// Para que no se salga de la pantalla
         
     },
 
-    /**
-     * Create the static obstacles (firepots)
-     */
+    // Crea los obstáculos estáticos (las antorchas de fuego)
     _createObstacles:function(){
         this.obstacles=this.add.group();
         var w=this.world.bounds.width-800;
@@ -92,7 +91,7 @@ GameCtrl.Stage01.prototype = {
             var firepot=this.add.sprite(i, 585, 'clown','firepot0000');
             this.physics.enable(firepot, Phaser.Physics.ARCADE);
             firepot.body.setSize(38, 48, -14, -15);
-            //firepot.body.setPolygon( 10,0,14,0,20,30, 5,30 );
+            // Animar las antorchas para que se vean encendidas
             firepot.body.x=i;
             firepot.body.y=600;
             firepot.body.immovable = true;
@@ -104,8 +103,9 @@ GameCtrl.Stage01.prototype = {
         }
 
         this.obstacles.callAll('animations.add', 'animations', 'burnPot', Phaser.Animation.generateFrameNames('firepot', 0, 1, '', 4), 10, true);
-        this.obstacles.callAll('animations.play', 'animations', 'burnPot');
+        this.obstacles.callAll('animations.play', 'animations', 'burnPot'); // Animación de fuego encendido
     },
+    // Crea círculos de fuego que se mueven a la izquierda en el escenario
     _createFireCirclesLeft:function(){
         var burnCircleLeft=Phaser.Animation.generateFrameNames('firecirclel', 0, 1, '', 4);
         this.firecirclesLeft=this.add.group();
@@ -125,11 +125,12 @@ GameCtrl.Stage01.prototype = {
 
         this.firecirclesLeft.setAll('scale.x',3);
         this.firecirclesLeft.setAll('scale.y',3);
-        this.firecirclesLeft.setAll('body.velocity.x',-70);
+        this.firecirclesLeft.setAll('body.velocity.x',-70); // Velocidad hacia la izquierda
 
-        this.firecirclesLeft.callAll('animations.play', 'animations', 'burnCircleLeft');
+        this.firecirclesLeft.callAll('animations.play', 'animations', 'burnCircleLeft');// Encendemos su animación
 
     },
+    // Crea círculos de fuego que se mueven a la derecha en el escenario, sincronizados con los de la izquierda
     _createFireCirclesRight:function(){
         var burnCircleRigth=Phaser.Animation.generateFrameNames('firecircler', 0, 1, '', 4);
         this.firecirclesRight=this.add.group();
@@ -150,6 +151,7 @@ GameCtrl.Stage01.prototype = {
         this.firecirclesRight.callAll('animations.play', 'animations', 'burnCircleRigth');
 
     },
+   // Crea zonas invisibles para que cuando el león toque los círculos, el juego termine.
     _createFireCirclesCollision:function(){
         this.fireCollisionGroup=this.add.group();
         this.firecirclesLeft.forEach(function(e){
@@ -157,19 +159,20 @@ GameCtrl.Stage01.prototype = {
         
             var touchFire = this.game.add.sprite(x-10, 554);
             this.physics.enable(touchFire, Phaser.Physics.ARCADE);
-            touchFire.body.setSize(25, 150);
+            touchFire.body.setSize(25, 150); // Área de colisión
             this.fireCollisionGroup.add(touchFire);
         }, this);
         this.fireCollisionGroup.setAll('body.velocity.x',-70);
     },
+    // Función que se ejecuta cuando el estado inicia
     create: function () {
         this.gameover=false;
-        this.music = this.add.audio('stage1');
+        this.music = this.add.audio('stage1');// Música del nivel
         this.music.play();
         
 
-        this.cursors =this.game.input.keyboard.createCursorKeys();
-        this.world.setBounds(0,0,1024 * 8, 200);
+        this.cursors =this.game.input.keyboard.createCursorKeys(); // Teclas para mover al león
+        this.world.setBounds(0,0,1024 * 8, 200); // Mundo es más ancho que la pantalla
         //this.background=this.game.add.tileSprite(0, 200, 1024, 552, 'background');
         this.background=this.add.tileSprite(0, 200, 1024 * 8, 552, 'stage01');
 
@@ -183,8 +186,8 @@ GameCtrl.Stage01.prototype = {
     
         this._createFireCirclesCollision();
 
-        this.floor = this.game.add.sprite(0, 678);
-        this.endStage=this.game.add.sprite(1024*8-300, 620, 'clown','endLevel1');
+        this.floor = this.game.add.sprite(0, 678); // Piso invisible
+        this.endStage=this.game.add.sprite(1024*8-300, 620, 'clown','endLevel1'); // Meta final
         this.physics.enable(this.floor, Phaser.Physics.ARCADE);
         this.physics.enable(this.endStage, Phaser.Physics.ARCADE);
         this.endStage.scale.x=3;
@@ -200,7 +203,7 @@ GameCtrl.Stage01.prototype = {
         this.floor.body.collideWorldBounds = true;
         this.floor.body.width = this.game.world.width;
 
-        this.recicleFireCirclesWall = this.game.add.sprite(-12, 600);
+        this.recicleFireCirclesWall = this.game.add.sprite(-12, 600); // Pared para reiniciar círculos
         this.physics.enable(this.recicleFireCirclesWall, Phaser.Physics.ARCADE);
         this.recicleFireCirclesWall.body.immovable = true;
         this.recicleFireCirclesWall.body.height = 500;
@@ -208,12 +211,14 @@ GameCtrl.Stage01.prototype = {
          
     },
     triggerGameover: function(){
+        // Esta función se llama cuando el león choca con fuego o antorchas.
         var that=this;
         this.music.stop();
-        this.failureSound=this.add.audio('failure');
+        this.failureSound=this.add.audio('failure'); // Sonido de perder
         this.failureSound.play();
          
         setTimeout(function(){
+            // Ponemos al león y payaso en pose quemados
             that.lion.animations.stop();
             that.clown.frameName='clownburn0000';
             that.lion.frameName='lionburn0000';
@@ -227,7 +232,7 @@ GameCtrl.Stage01.prototype = {
             that.firecirclesLeft.setAll('body.velocity.x',0);
         },1);
         
-        setTimeout(function(){
+        setTimeout(function(){ // Reinicia el nivel
             that.game.state.start('Stage01');
             that.failureSound.stop();
         },3100);
@@ -235,6 +240,7 @@ GameCtrl.Stage01.prototype = {
         this.gameover=true;
     },
     _recicleFireCircle:function(){
+        // Esta función toma los círculos que ya salieron de pantalla y los vuelve a poner al principio.
         var fLeft=this.firecirclesLeft.getFirstExists();
         var fRight=this.firecirclesRight.getFirstExists();
         var fObstable=this.fireCollisionGroup.getFirstExists();
@@ -252,28 +258,30 @@ GameCtrl.Stage01.prototype = {
 
     },
     triggerWin: function(){
+        // Esta función cambia a la pantalla Prestage para ir al siguiente nivel.
         GameCtrl.data={textToRender:'STAGE 02', nextState:'Stage02' };
         setTimeout(function(_this){
             _this.game.state.start('Prestage');
         },10, this);
     },
     update: function () {
+        // Esta función se repite todo el tiempo para mover, saltar y detectar colisiones.
         if(this.gameover){
             return;
         }
-
+        // Hacemos que la cámara siga al león
         if(this.lion.body.x<(this.world.width-1600)){
             this.game.physics.arcade.collide(this.recicleFireCirclesWall,this.fireCollisionGroup, this._recicleFireCircle,null,this);
         }
 
-
+        // Revisamos que se toquen obstáculos o fuego para perder
 
         this.game.physics.arcade.collide(this.lion, this.fireCollisionGroup, this.triggerGameover, null, this);
         this.game.physics.arcade.collide(this.lion, this.obstacles, this.triggerGameover, null, this);
-
         
+        // Revisamos que llegue a la meta para ganar
         this.game.physics.arcade.collide(this.lion, this.endStage, this.triggerWin, null, this);
-
+        // Aplicamos gravedad al león
         this.game.physics.arcade.collide(this.endStage, this.lion);
         this.game.physics.arcade.collide(this.floor, this.lion);
 
@@ -283,48 +291,50 @@ GameCtrl.Stage01.prototype = {
         var isJumping=!this.lion.body.touching.down;
 
         this.game.camera.x=this.lion.x-100;
+        // Cambiamos animación del león según esté saltando o en el piso
         if(isJumping){
             this.clown.frameName='clownStandJump0000';
             this.lion.frameName='lion0002';
         }else{
             this.clown.frameName='clownStand0000';
         }
-
+        // Movimiento del león: salto, izquierda y derecha
         if (this.cursors.up.isDown&& !isJumping){
-            this.lion.body.velocity.y=-480;
+            this.lion.body.velocity.y=-480; // Salto
         }
         
 
         if(isJumping){
             // Mantengo la velocidad del fondo
 
-            return;
+            return; // Cuando está saltando solo cae, no camina
         }
 
         if (this.cursors.right.isDown){
             this.clown.isRunning=true;
             //this.background.tilePosition.x -= 4;
             
-            this.lion.body.velocity.x=200;
+            this.lion.body.velocity.x=200; // Avanza rápido
             this.lion.animations.play('runLion', 10, true);
         }else if (this.cursors.left.isDown){
             this.clown.isRunning=true;
             //this.background.tilePosition.x -= 4;
             
-            this.lion.body.velocity.x=-100;
+            this.lion.body.velocity.x=-100; // Avanza lento a la izquierda
             this.lion.animations.play('runLion', 6, true);
         }else{
-            this.lion.body.velocity.x=0;
+            this.lion.body.velocity.x=0; //Queda quieto
                 
             this.clown.isRunning=false;
             this.lion.animations.stop(0);
-            this.lion.animations.play('idleLion');
+            this.lion.animations.play('idleLion'); // Animación de reposov
         }
 
 
     },
     render: function(){
         /* global CIRCUSDEBUG */
+        // Esta función solo sirve para dibujar rectángulos que muestran dónde colisionan los personajes.
 //        CIRCUSDEBUG=true;
         if(CIRCUSDEBUG){
             this.game.debug.bodyInfo(this.lion, 32, 320);
@@ -353,11 +363,7 @@ GameCtrl.Stage01.prototype = {
         }, this);*/
     },
     quitGame: function () {
-
-            //        Here you should destroy anything you no longer need.
-            //        Stop music, delete sprites, purge caches, free resources, all that good stuff.
-
-            //        Then let's go back to the main menu.
+            // Al salir del nivel, detenemos música, limpiamos recursos y volvemos al menú.
             this.game.state.start('MainMenu');
 
     }
