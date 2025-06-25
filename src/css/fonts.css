@@ -1,13 +1,28 @@
-/* @font-face { font-family: "Arcade"; src: url('arcadeclasic.ttf');} */
+/* Definición de fuente personalizada usando @font-face */
+
+/*
+    Aquí definimos la fuente 'arcadeclasic' para poder utilizarla en el CSS del juego.
+    Se incluyen varias versiones del archivo de fuente para asegurar compatibilidad 
+    con diferentes navegadores (antiguos y modernos).
+*/
 
 @font-face {
-    font-family: 'arcadeclasic';
-    src: url('../assets/fonts/arcadeclasic-webfont.eot');
-    src: url('../assets/fonts/arcadeclasic-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../assets/fonts/arcadeclasic-webfont.woff') format('woff'),
-         url('../assets/fonts/arcadeclasic-webfont.ttf') format('truetype'),
-         url('../assets/fonts/arcadeclasic-webfont.svg#arcadeclassicregular') format('svg');
-    font-weight: normal;
-    font-style: normal;
+  font-family: "arcadeclasic"; /* Nombre que usaremos en CSS (por ejemplo: font-family: 'arcadeclasic'; ) */
 
+  /* Fuente en formato EOT (Embedded OpenType), requerido para versiones antiguas de Internet Explorer */
+  src: url("../assets/fonts/arcadeclasic-webfont.eot");
+
+  /* Diferentes formatos para soportar múltiples navegadores */
+  src: url("../assets/fonts/arcadeclasic-webfont.eot?#iefix")
+      format("embedded-opentype"),
+    /* IE6-IE9 */ url("../assets/fonts/arcadeclasic-webfont.woff")
+      format("woff"),
+    /* navegadores modernos */ url("../assets/fonts/arcadeclasic-webfont.ttf")
+      format("truetype"),
+    /* Safari, Android, iOS */
+      url("../assets/fonts/arcadeclasic-webfont.svg#arcadeclassicregular")
+      format("svg"); /* navegadores antiguos con soporte SVG */
+
+  font-weight: normal; /* No es bold (negrita) */
+  font-style: normal; /* No es itálica */
 }
