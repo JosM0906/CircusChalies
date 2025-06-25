@@ -48,6 +48,7 @@ GameCtrl.Boot.prototype = {
         this.game.scale.pageAlignVertically = true;
         this.game.scale.setScreenSize(true);
         this.game.state.start('Preloader');
+        
 
     },
 
