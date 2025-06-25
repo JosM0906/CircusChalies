@@ -1,8 +1,20 @@
+/* 
+  Regla global para evitar que el usuario seleccione texto en la página 
+  (-webkit-user-select es para compatibilidad con navegadores basados en WebKit, como Chrome y Safari) 
+*/
 * {
   -webkit-user-select: none;
   user-select: none;
 }
 
+/* 
+  Estilo para el elemento HTML raíz:
+  - Fondo negro (#000)
+  - Sin margen
+  - Ocupa el 100% del ancho y alto de la ventana
+  - Oculta las barras de desplazamiento (overflow: hidden)
+  - Centra el contenido horizontalmente (text-align: center)
+*/
 html {
   background-color: #000;
   margin: 0;
@@ -12,7 +24,12 @@ html {
   text-align: center;
 }
 
+/* 
+  Estilo para el body:
+  - Margen: se eliminan márgenes, pero se deja 1px en la parte inferior por compatibilidad con ciertos chequeos en iOS
+  - Fondo negro
+*/
 body {
-  margin: 0px 0px 1px 0px; /* the extra 1px allows the iOS inner/outer check to work */
+  margin: 0px 0px 1px 0px; /* el 1px adicional permite que ciertas comprobaciones internas/externas en iOS funcionen correctamente */
   background: #000;
 }
