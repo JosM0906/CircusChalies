@@ -1,46 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
   <head>
-    <title>Circus HTML5</title>
-    <!-- Título que aparece en la pestaña del navegador -->
-    <meta charset="utf-8" />
-    <!-- Codificación de caracteres en UTF-8 -->
-    <meta http-equiv="X-UA-Compatible" content="chrome=1, IE=9" />
-    <!-- Hace que sea compatible con Chrome y Internet Explorer 9 -->
-
-    <!-- build:css main.min.css -->
-    <!-- Aquí empieza la sección que una herramienta Grunt usará para juntar y minimizar el CSS en un solo archivo llamado main.min.css -->
-    <link rel="stylesheet" href="css/main.css" />
-    <!-- Archivo CSS principal -->
-    <!-- /build -->
+    <meta charset="UTF-8" />
+    <title>Redirigiendo…</title>
+    <script>
+      // Redirigir automáticamente al cargar la página
+      window.location.replace("src/index.html");
+    </script>
   </head>
-  <body>
-    <div id="game"></div>
-    <!-- Contenedor donde el juego se dibujará en pantalla -->
-
-    <!-- build:remove -->
-    <!-- Este script es solo para desarrollo local. Recarga automáticamente la página cuando detecta cambios en los archivos -->
-    <script src="http://localhost:35729/livereload.js"></script>
-    <!-- /build -->
-
-    <!-- build:js main.min.js -->
-    <!-- Aquí empieza la lista de scripts JS que también serán unidos y minimizados en un solo archivo main.min.js para producción -->
-    <script src="js/lib/phaser.js"></script>
-    <!-- Biblioteca Phaser.js para crear el juego -->
-    <script src="js/states/Boot.js"></script>
-    <!-- Estado Boot: preparación inicial del juego -->
-    <script src="js/states/Preloader.js"></script>
-    <!-- Estado Preloader: carga imágenes, sonidos, etc. -->
-    <script src="js/states/MainMenu.js"></script>
-    <!-- Estado MainMenu: pantalla del menú principal -->
-    <script src="js/states/Prestage.js"></script>
-    <!-- Estado Prestage: entre pantallas o entre niveles -->
-    <script src="js/states/Stage01.js"></script>
-    <!-- Estado Stage01: primer nivel del juego -->
-    <script src="js/states/Stage02.js"></script>
-    <!-- Estado Stage02: segundo nivel del juego -->
-    <script src="js/main.js"></script>
-    <!-- Archivo principal que arranca el juego -->
-    <!-- /build -->
-  </body>
+  <body></body>
 </html>
