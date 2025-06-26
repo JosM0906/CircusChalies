@@ -18,15 +18,7 @@
 * Phaser uses p2.js for full-body physics, created by Stefan Hedman https://github.com/schteppe/p2.js @schteppe
 * Phaser contains a port of N+ Physics, converted by Richard Davey, original by http://www.metanetsoftware.com
 *
-* Many thanks to Adam Saltsman (@ADAMATOMIC) for releasing Flixel, from which both Phaser
-* and my love of framework development can be traced.
-*
-* Follow development at http://phaser.io and on our forum
-*
-* "If you want your children to be intelligent,  read them fairy tales."
-* "If you want them to be more intelligent, read them more fairy tales."
-*                                                     -- Albert Einstein
-*/
+
 /**
  * @author Mat Groves http://matgroves.com/ @Doormat23
  */
