@@ -29,8 +29,31 @@ GameCtrl.Preloader.prototype = {
 		// Cargamos el script de Google WebFont para poder usar fuentes personalizadas en el juego
 		this.game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
 
-		// Cargamos las imágenes que se usarán para mostrar el fondo y la barra de carga durante la precarg
+		// Cargamos las imágenes que se usarán para mostrar el fondo y la barra de carga durante la precarga
+		this.background = this.add.sprite(this.game.width / 2 - 250, this.game.height / 2 - 70, 'preloaderBackground');
+		this.preloadBar = this.add.sprite(this.game.width / 2 - 250, this.game.height / 2 - 70, 'preloaderBar');
 
+		// Establecemos la barra de carga como "preload sprite"
+		// Esto permite que la barra se recorte automáticamente en función del progreso de carga
+		this.load.setPreloadSprite(this.preloadBar);
+
+		// --- CARGA DE IMÁGENES DEL JUEGO ---
+		this.load.image('stage01', 'assets/images/stage01.png'); // Fondo del escenario 1
+		this.load.image('stage02', 'assets/images/stage02.png'); // Fondo del escenario 2
+		// this.load.image('background', 'assets/images/background.png'); // Imagen de fondo opcional (comentada)
+
+		// --- EJEMPLO DE CARGA DE ATLAS EXTERNO ---
+		// this.load.atlas('playButton', 'assets/images/play_button.png', 'assets/images/play_button.json');
+		// Se usa para cargar múltiples sprites desde una sola imagen + un archivo JSON que define los frames
+
+		// --- CARGA DE AUDIOS DEL JUEGO ---
+		this.load.audio('stage1', ['assets/audio/stage1-4.mp3']); // Música para el escenario 1
+        this.load.audio('stage2', ['assets/audio/stage1-4.mp3']); // Música para el escenario 2 (usa el mismo archivo)
+		this.load.audio('failure', ['assets/audio/failure.mp3']); // Sonido para fallos o colisiones
+
+		// --- EJEMPLO DE CARGA DE FUENTES BITMAP (comentado) ---
+		// this.load.bitmapFont('caslon', 'assets/fonts/caslon.png', 'assets/fonts/caslon.xml');
+		// Se puede usar si queremos cargar fuentes tipo "pixel art" en formato imagen+XML
 
 
 // Definimos un objeto llamado botData que contiene la información de los frames del personaje "clown".
