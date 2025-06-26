@@ -86,16 +86,21 @@ PIXI.DEG_TO_RAD = Math.PI / 180;
  */
 
 /**
- * The Point object represents a location in a two-dimensional coordinate system, where x represents the horizontal axis and y represents the vertical axis.
+
+ * El objeto Point representa una ubicación en un sistema de coordenadas bidimensional.
+ * `x` representa la posición en el eje horizontal, y `y` la posición en el eje vertical.
  *
  * @class Point
  * @constructor
- * @param x {Number} position of the point on the x axis
- * @param y {Number} position of the point on the y axis
+ * @param x {Number} posición del punto sobre el eje X
+ * @param y {Number} posición del punto sobre el eje Y
  */
-PIXI.Point = function(x, y)
-{
+PIXI.Point = function(x, y) {
+
     /**
+     * Coordenada X del punto.
+     * Si no se proporciona ningún valor, se inicializa en 0 por defecto.
+     *
      * @property x
      * @type Number
      * @default 0
@@ -103,6 +108,9 @@ PIXI.Point = function(x, y)
     this.x = x || 0;
 
     /**
+     * Coordenada Y del punto.
+     * También se inicializa en 0 si no se pasa ningún valor.
+     *
      * @property y
      * @type Number
      * @default 0
@@ -111,18 +119,21 @@ PIXI.Point = function(x, y)
 };
 
 /**
- * Creates a clone of this point
+ * Crea un clon de este punto.
+ * Es decir, devuelve una nueva instancia de PIXI.Point con las mismas coordenadas.
  *
  * @method clone
- * @return {Point} a copy of the point
+ * @return {Point} Una copia del punto actual
  */
-PIXI.Point.prototype.clone = function()
-{
+PIXI.Point.prototype.clone = function() {
     return new PIXI.Point(this.x, this.y);
 };
 
-// constructor
+
+// Asegura que el constructor de los objetos que usan Point.prototype
+// siga apuntando a PIXI.Point (por claridad y buena práctica)
 PIXI.Point.prototype.constructor = PIXI.Point;
+
 
 PIXI.Point.prototype.set = function(x, y)
 {
