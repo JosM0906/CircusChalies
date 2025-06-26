@@ -1,56 +1,36 @@
-
 /* global GameCtrl */
+// Indicamos que se usa la variable global `GameCtrl`, donde se definen todos los estados del juego
 
 /* exported WebFontConfig */
-var WebFontConfig ={
+// Exportamos la variable `WebFontConfig` para que pueda ser usada externamente (por ejemplo, por la librería WebFont Loader)
+
+// Configuración para cargar una fuente personalizada desde un archivo CSS
+var WebFontConfig = {
 	custom: {
-		families: ['arcadeclasic'],
-		urls: ['css/fonts.css'],
+		families: ['arcadeclasic'],       // Nombre de la fuente personalizada
+		urls: ['css/fonts.css'],          // Ruta al archivo CSS que importa la fuente (por ejemplo, vía @font-face)
 	}
 };
 
 (function(){
-'use strict';
+'use strict'; // Activa el modo estricto de JavaScript para evitar errores comunes
 
+// Definimos el estado "Preloader" del juego
 GameCtrl.Preloader = function () {
-	this.background = null;
-	this.preloadBar = null;
-
-	this.ready = false;
-
+	this.background = null;   // Sprite del fondo de la pantalla de carga
+	this.preloadBar = null;   // Sprite de la barra de progreso de carga
+	this.ready = false;       // Indica si los recursos ya están listos para continuar
 };
 
 GameCtrl.Preloader.prototype = {
 
+	// Función que se ejecuta cuando comienza la precarga de recursos
 	preload: function () {
+		// Cargamos el script de Google WebFont para poder usar fuentes personalizadas en el juego
 		this.game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
 
-		//	These are the assets we loaded in Boot.js
-		//	A nice sparkly background and a loading progress bar		
-		this.background = this.add.sprite(this.game.width / 2 - 250, this.game.height / 2 - 70, 'preloaderBackground');
-		this.preloadBar = this.add.sprite(this.game.width / 2 - 250, this.game.height / 2 - 70, 'preloaderBar');
+		// Cargamos las imágenes que se usarán para mostrar el fondo y la barra de carga durante la precarg
 
-		//	This sets the preloadBar sprite as a loader sprite.
-		//	What that does is automatically crop the sprite from 0 to full-width
-		//	as the files below are loaded in.
-		this.load.setPreloadSprite(this.preloadBar);
-
-		//	Here we load the rest of the assets our game needs.		
-		this.load.image('stage01', 'assets/images/stage01.png');
-		this.load.image('stage02', 'assets/images/stage02.png');
-       // this.load.image('background', 'assets/images/background.png');
-
-
-
-		//  This is how you load an atlas
-		//this.load.atlas('playButton', 'assets/images/play_button.png', 'assets/images/play_button.json');
-
-		this.load.audio('stage1', ['assets/audio/stage1-4.mp3']);
-        this.load.audio('stage2', ['assets/audio/stage1-4.mp3']);
-		this.load.audio('failure', ['assets/audio/failure.mp3']);
-
-		//  This is how you load fonts
-		//this.load.bitmapFont('caslon', 'assets/fonts/caslon.png', 'assets/fonts/caslon.xml');
 
 
 // Definimos un objeto llamado botData que contiene la información de los frames del personaje "clown".
